@@ -1,0 +1,37 @@
+{
+  "name": "fakart",
+  "version": "1.0.0",
+  "description": "Online Shopping Site Fake API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pprathameshmore/Fakart.git"
+  },
+  "keywords": [
+    "fakeapi",
+    "fakart",
+    "prathameshmore",
+    "fake",
+    "nodejs",
+    "expressjs",
+    "api",
+    "apiapp",
+    "apidemo",
+    "learnapi",
+    "mean",
+    "expressapp"
+  ],
+  "author": "Prathamesh More",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pprathameshmore/Fakart/issues"
+  },
+  "homepage": "https://github.com/pprathameshmore/Fakart#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1"
+  }
+}
