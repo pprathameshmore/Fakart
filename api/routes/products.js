@@ -1,97 +1,130 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const router = express.Router();
 
-var products = [{
-    "imgUrl": "https://image.shutterstock.com/z/stock-photo-pair-of-white-sneakers-isolated-on-white-background-sport-shoes-712448377.jpg",
-    "name": "Sport Shoes",
-    "price": 110
-},
-{
-    "imgUrl": "https://image.shutterstock.com/z/stock-photo-vintage-red-shoes-on-white-background-92008067.jpg",
-    "name": "Red SNEAKER",
-    "price": 91
-},
-{
-    "imgUrl": "https://image.shutterstock.com/z/stock-photo-pink-and-black-sport-woman-shoes-isolated-on-white-background-709418083.jpg",
-    "name": "Sport Shoes Women",
-    "price": 94
-},
-{
-    "imgUrl": "https://image.shutterstock.com/z/stock-photo-children-s-autumn-or-winter-fashion-boots-isolated-on-white-background-708900334.jpg",
-    "name": "Winter boots children",
-    "price": 143
-},
-{
-    "imgUrl": "https://image.shutterstock.com/z/stock-photo-bangkok-thailand-january-onitsuka-tiger-asics-gel-lyte-iii-on-january-in-bangkok-292088969.jpg",
-    "name": "Sports shoes Red-White",
-    "price": 150
-},
-{
-    "imgUrl": "https://image.shutterstock.com/z/stock-photo-leather-shoes-isolated-on-white-background-including-clipping-path-216565609.jpg",
-    "name": "Black leather shoes",
-    "price": 250
-},
-{
-    "imgUrl": "https://image.shutterstock.com/z/stock-photo-casual-shoes-on-white-background-included-clipping-path-667459072.jpg",
-    "name": "Shoes Canvas",
-    "price": 50
-},
-{
-    "imgUrl": "https://image.shutterstock.com/z/stock-photo-white-sneakers-on-white-background-including-clipping-path-1100736923.jpg",
-    "name": "Shoes White",
-    "price": 85
-},
-{
-    "imgUrl": "https://image.shutterstock.com/z/stock-photo-yellow-sneakers-15066415.jpg",
-    "name": "Sneakers Yellow",
-    "price": 125
-}
-];
+const Product = require('../models/products');
 
 router.get('/', (request, response, next) => {
-    response.status(200).json({
-        products
-    })
+    Product.find({}, (error, product) => {
+        if (error) {
+            response.status(404).json({
+                message: "Handling GET request to /products/",
+                error
+            });
+        } else {
+            console.log(product.length);
+            if (product.length == 0 || product == undefined) {
+                response.status(204).json({
+                    message: "No content",
+                    product
+                });
+            } else {
+                response.status(200).json({
+                    count: product.length,
+                    message: "Handling GET request to /products",
+                    product
+                });
+            }
+        }
+    }
+    ).select('name price _id');
 });
 
 router.post('/', (request, response, next) => {
-    response.status(201).json({
-        status: 201,
-        message: "Product added"
+    const product = new Product({
+        name: request.body.name,
+        price: request.body.price
     });
-});
-
-router.get('/:name', (request, response, next) => {
-    let name = request.params.name;
-
-    products.forEach((product) => {
-        if (product.name == name) {
-            response.status(200).json(product);
-        } else {
+    product.save((error, product) => {
+        if (error) {
             response.status(404).json({
-                status: 404,
-                message: "Product not fouund - " + name
+                message: "Not found",
+                error
+            });
+        } else {
+            console.log(product);
+            response.status(201).json({
+                message: "Handling POST request to /products",
+                product
             });
         }
-    });
+    }
+    );
 });
 
-router.patch('/:name', (request, response, next) => {
-    let name = request.params.name;
+router.get('/:id', (request, response, next) => {
+    let id = request.params.id;
 
-    response.status(200).json({
-        status: 200,
-        message: "Product details updated -" + name
-    });
+    Product.findById(id, (error, product) => {
+        if (error) {
+            response.status(404).json({
+                message: "Not found",
+                error
+            });
+        } else {
+            if (product) {
+                response.status(200).json({
+                    message: "Handling GET request to /products/:id",
+                    product
+                });
+            } else {
+                response.status(404).json({
+                    message: "Not found",
+                    product
+                });
+            }
+
+        }
+    }).select('name price _id');
 
 });
 
-router.delete('/:name', (request, response, next) => {
-    let name = request.params.name;
+router.patch('/:id', (request, response, next) => {
+    let _id = request.params.id;
+    let name = request.body.name;
+    let price = request.body.price;
+    Product.findByIdAndUpdate(_id, { $set: { name: name, price: price } }, (error, product) => {
+        if (error) {
+            console.log(error);
+        } else {
+            if (product) {
+                response.status(200).json({
+                    message: "Handling DELETE request to /products/:id",
+                    product
+                });
+            } else {
+                response.status(404).json({
+                    message: "Not found",
+                    product
+                });
+            }
+        }
+    })
 
-    response.status(200).json({
-        status: 200,
-        message: "Product deleted - " + name
+});
+
+router.delete('/:id', (request, response, next) => {
+    Product.findByIdAndDelete({ _id: request.params.id }, (error, product) => {
+        if (error) {
+            response.status(404).json({
+                message: "Not found",
+                error
+            });
+        } else {
+            if (product) {
+                console.log(product);
+                response.status(200).json({
+                    message: "Handling DELETE request to /products/:id",
+                    product
+                });
+            } else {
+                response.status(404).json({
+                    message: "Not found",
+                    product
+                });
+            }
+
+        }
     });
 });
 
