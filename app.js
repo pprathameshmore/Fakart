@@ -6,6 +6,8 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use('/uploads', express.static('uploads'));
+app.use(express.static('public'));
 
 const productsRouter = require('./api/routes/products')
 const orderRouter = require('./api/routes/orders');
@@ -30,6 +32,18 @@ app.use((error, resquest, response, next) => {
             message: error.message
         }
     });
+});
+
+app.use('/uploads/:fileName', (request, response, next) => {
+    let fileName = request.params.fileName;
+    console.log(fileName);
+    //Look for image now
+    response.setHeader('Content-type', 'image/jpeg')
+        .status(200).sendFile('uploads/' + fileName, (error) => {
+            if (error) {
+                console.log(error);
+            }
+        });
 });
 
 module.exports = app;

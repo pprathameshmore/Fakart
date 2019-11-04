@@ -1,6 +1,29 @@
 const express = require('express');
-const mongoose = require('mongoose');
+const multer = require('multer');
+const path = require('path');
 const router = express.Router();
+
+const storage = multer.diskStorage({
+    destination: (request, file, cb) => {
+        cb(null, './uploads');
+    },
+    filename: (request, file, cb) => {
+        cb(null, Date.now() + file.originalname);
+    }
+});
+
+const fileFilter = (request, file, cb) => {
+    if (file.mimetype === 'image/jpeg' || file.mimetype == 'image/png') {
+        cb(null, true);
+    } else {
+        cb(null, false);
+    }
+}
+
+const upload = multer({
+    storage: storage,
+    fileFilter: fileFilter
+});
 
 const Product = require('../models/products');
 
@@ -13,7 +36,7 @@ router.get('/', (request, response, next) => {
             });
         } else {
             console.log(product.length);
-            if (product.length == 0 || product == undefined) {
+            if (product.length === 0 || product === undefined) {
                 response.status(204).json({
                     message: "No content",
                     product
@@ -27,14 +50,18 @@ router.get('/', (request, response, next) => {
             }
         }
     }
-    ).select('name price _id');
+    ).select('name price _id productImage');
 });
 
-router.post('/', (request, response, next) => {
+
+
+router.post('/', upload.single('productImage'), (request, response, next) => {
     const product = new Product({
         name: request.body.name,
-        price: request.body.price
+        price: request.body.price,
+        productImage: request.file.path
     });
+    console.log(request.file);
     product.save((error, product) => {
         if (error) {
             response.status(404).json({
@@ -75,7 +102,7 @@ router.get('/:id', (request, response, next) => {
             }
 
         }
-    }).select('name price _id');
+    }).select('name price _id productImage');
 
 });
 
