@@ -8,7 +8,7 @@ router.get('/', (request, response, next) => {
     Product.find({}, (error, product) => {
         if (error) {
             response.status(404).json({
-                message: "Handling GET request to /products/",
+                message: "Something went wrong",
                 error
             });
         } else {
@@ -21,7 +21,7 @@ router.get('/', (request, response, next) => {
             } else {
                 response.status(200).json({
                     count: product.length,
-                    message: "Handling GET request to /products",
+                    message: "All products",
                     product
                 });
             }
@@ -38,13 +38,13 @@ router.post('/', (request, response, next) => {
     product.save((error, product) => {
         if (error) {
             response.status(404).json({
-                message: "Not found",
+                message: "Something went wrong",
                 error
             });
         } else {
             console.log(product);
             response.status(201).json({
-                message: "Handling POST request to /products",
+                message: "Product saved",
                 product
             });
         }
@@ -58,13 +58,13 @@ router.get('/:id', (request, response, next) => {
     Product.findById(id, (error, product) => {
         if (error) {
             response.status(404).json({
-                message: "Not found",
+                message: "Something went wrong",
                 error
             });
         } else {
             if (product) {
                 response.status(200).json({
-                    message: "Handling GET request to /products/:id",
+                    message: "Product with ID",
                     product
                 });
             } else {
@@ -85,11 +85,14 @@ router.patch('/:id', (request, response, next) => {
     let price = request.body.price;
     Product.findByIdAndUpdate(_id, { $set: { name: name, price: price } }, (error, product) => {
         if (error) {
-            console.log(error);
+            response.status(404).json({
+                message: "Something went wrong",
+                error
+            });
         } else {
             if (product) {
                 response.status(200).json({
-                    message: "Handling DELETE request to /products/:id",
+                    message: "Product updated",
                     product
                 });
             } else {
@@ -107,14 +110,13 @@ router.delete('/:id', (request, response, next) => {
     Product.findByIdAndDelete({ _id: request.params.id }, (error, product) => {
         if (error) {
             response.status(404).json({
-                message: "Not found",
+                message: "Something went wrong",
                 error
             });
         } else {
             if (product) {
-                console.log(product);
                 response.status(200).json({
-                    message: "Handling DELETE request to /products/:id",
+                    message: "Product removed",
                     product
                 });
             } else {
