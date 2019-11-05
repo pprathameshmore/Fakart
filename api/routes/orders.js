@@ -2,8 +2,8 @@ const express = require('express');
 const moongose = require('mongoose');
 const router = express.Router();
 
-const Order = require('../models/orders');
-const Product = require('../models/products');
+const Order = require('../models/order');
+const Product = require('../models/product');
 
 router.get('/', (request, response, next) => {
     Order.find({}, (error, order) => {
@@ -92,7 +92,12 @@ router.patch('/:id', (request, response, next) => {
     let quantity = request.body.quantity;
     let productID = request.body.productID;
 
-    Order.findByIdAndUpdate(orderID, { $set: { quantity: quantity, productID: productID } }, (error, order) => {
+    Order.findByIdAndUpdate(orderID, {
+        $set: {
+            quantity: quantity,
+            productID: productID
+        }
+    }, (error, order) => {
         if (error) {
 
         } else {

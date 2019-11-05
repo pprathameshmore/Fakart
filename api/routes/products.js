@@ -25,7 +25,7 @@ const upload = multer({
     fileFilter: fileFilter
 });
 
-const Product = require('../models/products');
+const Product = require('../models/product');
 
 router.get('/', (request, response, next) => {
     Product.find({}, (error, product) => {
@@ -49,11 +49,20 @@ router.get('/', (request, response, next) => {
                 });
             }
         }
-    }
-    ).select('name price _id productImage');
+    }).select('name price _id productImage');
 });
 
-
+router.get('/uploads/:fileName', (request, response, next) => {
+    let fileName = request.params.fileName;
+    console.log(fileName);
+    //Look for image now
+    response.setHeader('Content-type', 'image/jpeg')
+        .status(200).sendFile('uploads/' + fileName, (error) => {
+            if (error) {
+                console.log(error);
+            }
+        });
+});
 
 router.post('/', upload.single('productImage'), (request, response, next) => {
     const product = new Product({
@@ -75,8 +84,7 @@ router.post('/', upload.single('productImage'), (request, response, next) => {
                 product
             });
         }
-    }
-    );
+    });
 });
 
 router.get('/:id', (request, response, next) => {
@@ -110,7 +118,12 @@ router.patch('/:id', (request, response, next) => {
     let _id = request.params.id;
     let name = request.body.name;
     let price = request.body.price;
-    Product.findByIdAndUpdate(_id, { $set: { name: name, price: price } }, (error, product) => {
+    Product.findByIdAndUpdate(_id, {
+        $set: {
+            name: name,
+            price: price
+        }
+    }, (error, product) => {
         if (error) {
             response.status(404).json({
                 message: "Something went wrong",
@@ -134,7 +147,9 @@ router.patch('/:id', (request, response, next) => {
 });
 
 router.delete('/:id', (request, response, next) => {
-    Product.findByIdAndDelete({ _id: request.params.id }, (error, product) => {
+    Product.findByIdAndDelete({
+        _id: request.params.id
+    }, (error, product) => {
         if (error) {
             response.status(404).json({
                 message: "Something went wrong",

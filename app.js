@@ -11,6 +11,7 @@ app.use(express.static('public'));
 
 const productsRouter = require('./api/routes/products')
 const orderRouter = require('./api/routes/orders');
+const userRouter = require('./api/routes/users');
 
 mongoose.connect('mongodb+srv://prathamesh:9420776721@cluster0-idvei.mongodb.net/test?retryWrites=true&w=majority', { useUnifiedTopology: true, useNewUrlParser: true }, (error) => {
     console.log("Connected to Database");
@@ -18,6 +19,7 @@ mongoose.connect('mongodb+srv://prathamesh:9420776721@cluster0-idvei.mongodb.net
 
 app.use('/products', productsRouter);
 app.use('/orders', orderRouter);
+app.use('/user', userRouter);
 
 app.use((resquest, response, next) => {
     var error = new Error('Not found');
@@ -34,17 +36,7 @@ app.use((error, resquest, response, next) => {
     });
 });
 
-app.use('/uploads/:fileName', (request, response, next) => {
-    let fileName = request.params.fileName;
-    console.log(fileName);
-    //Look for image now
-    response.setHeader('Content-type', 'image/jpeg')
-        .status(200).sendFile('uploads/' + fileName, (error) => {
-            if (error) {
-                console.log(error);
-            }
-        });
-});
+
 
 module.exports = app;
 
