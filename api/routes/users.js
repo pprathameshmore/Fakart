@@ -48,6 +48,38 @@ router.post('/signup', (request, response, next) => {
     });
 });
 
+router.post('/login', (request, response, next) => {
+    response.set('Content-Type', 'text/plain');
+    User.findOne({ email: request.body.email }, (error, user) => {
+        if (error) {
+            response.status(404).json({
+                message: "Auth failed",
+                error
+            });
+        }
+
+        bcrypt.compare(request.body.password, user.password, (error, isValid) => {
+            if (error) {
+                response.status(401).json({
+                    message: "Auth failed"
+                });
+            } else if (isValid) {
+                response.setHeader('Content-Type', 'text/plain');
+                response.status(200).json({
+                    message: "Auth successful"
+                });
+            }
+            response.status(401).json({
+                message: "Auth falied"
+            });
+        });
+    }).catch((error) => {
+        response.json({
+            error
+        });
+    });
+});
+
 router.delete('/:userID', (request, response, next) => {
     User.findByIdAndDelete({
         _id: request.params.userID
