@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const User = require('../models/user');
 
@@ -64,9 +65,16 @@ router.post('/login', (request, response, next) => {
                     message: "Auth failed"
                 });
             } else if (isValid) {
+                const token = jwt.sign({
+                    email: user.email,
+                    userId: user._id
+                }, "secret", {
+                    expiresIn: "1h"
+                });
                 response.setHeader('Content-Type', 'text/plain');
                 response.status(200).json({
-                    message: "Auth successful"
+                    message: "Auth successful",
+                    token
                 });
             }
             response.status(401).json({
