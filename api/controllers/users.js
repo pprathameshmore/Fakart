@@ -48,7 +48,9 @@ exports.user_sign_up = (request, response, next) => {
 }
 
 exports.users_log_in = (request, response, next) => {
-    User.findOne({ email: request.body.email }, (error, user) => {
+    User.findOne({
+        email: request.body.email
+    }, (error, user) => {
         if (error) {
             response.status(404).json({
                 message: "Auth failed",

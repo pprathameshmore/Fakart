@@ -5,7 +5,9 @@ const app = express();
 
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 app.use('/uploads', express.static('uploads'));
 app.use(express.static('public'));
 
@@ -13,7 +15,10 @@ const productsRouter = require('./api/routes/products')
 const orderRouter = require('./api/routes/orders');
 const userRouter = require('./api/routes/users');
 
-mongoose.connect('mongodb+srv://prathamesh:9420776721@cluster0-idvei.mongodb.net/test?retryWrites=true&w=majority', { useUnifiedTopology: true, useNewUrlParser: true }, (error) => {
+mongoose.connect('', {
+    useUnifiedTopology: true,
+    useNewUrlParser: true
+}, (error) => {
     console.log("Connected to Database");
 });
 
@@ -39,4 +44,3 @@ app.use((error, resquest, response, next) => {
 
 
 module.exports = app;
-

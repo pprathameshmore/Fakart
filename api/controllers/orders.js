@@ -1,4 +1,3 @@
-
 const Order = require('../models/order');
 
 exports.order_gets_all = (request, response, next) => {

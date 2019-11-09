@@ -41,7 +41,7 @@ exports.pro_get_uploads = (request, response, next) => {
         });
 }
 
-exports.product_create =  (request, response, next) => {
+exports.product_create = (request, response, next) => {
     const product = new Product({
         name: request.body.name,
         price: request.body.price,
@@ -147,4 +147,3 @@ exports.product_delete = (request, response, next) => {
         }
     });
 }
-
