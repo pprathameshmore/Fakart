@@ -25,6 +25,9 @@ mongoose.connect(process.env.MONGO_DB_URL, {
 app.use('/products', productsRouter);
 app.use('/orders', orderRouter);
 app.use('/user', userRouter);
+app.use('/', (request, response, next) => {
+    response.send("Welcome to Fakart");
+})
 
 app.use((resquest, response, next) => {
     var error = new Error('Not found');
