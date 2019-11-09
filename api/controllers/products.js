@@ -12,7 +12,6 @@ exports.product_get_all = (request, response, next) => {
                 error
             });
         } else {
-            console.log(product.length);
             if (product.length === 0 || product === undefined) {
                 response.status(204).json({
                     message: "No content",
@@ -31,7 +30,6 @@ exports.product_get_all = (request, response, next) => {
 
 exports.pro_get_uploads = (request, response, next) => {
     let fileName = request.params.fileName;
-    console.log(fileName);
     //Look for image now
     response.setHeader('Content-type', 'image/jpeg')
         .status(200).sendFile('uploads/' + fileName, (error) => {
@@ -54,7 +52,6 @@ exports.product_create = (request, response, next) => {
                 error
             });
         } else {
-            console.log(product);
             response.status(201).json({
                 message: "Product saved",
                 product

@@ -15,7 +15,7 @@ const productsRouter = require('./api/routes/products')
 const orderRouter = require('./api/routes/orders');
 const userRouter = require('./api/routes/users');
 
-mongoose.connect('', {
+mongoose.connect(process.env.MONGO_DB_URL, {
     useUnifiedTopology: true,
     useNewUrlParser: true
 }, (error) => {

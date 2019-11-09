@@ -8,7 +8,6 @@ exports.order_gets_all = (request, response, next) => {
                 error
             });
         } else {
-            console.log(order);
             if (order.length == 0 || order == undefined) {
                 response.status(204).json({
                     message: "No content",
@@ -40,13 +39,11 @@ exports.order_create = (request, response, next) => {
             });
             order.save((error, order) => {
                 if (error) {
-                    console.log(error);
                     response.status(404).json({
                         message: "Not found",
                         error
                     });
                 } else {
-                    console.log(order);
                     response.status(200).json({
                         message: "Order updated",
                         order
