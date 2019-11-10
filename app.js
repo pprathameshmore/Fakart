@@ -9,13 +9,6 @@ mongoose.connect(process.env.MONGO_DB_URL, {
 }, (error) => {
     console.log("Connected to Database");
 });
-
-
-app.use((resquest, response, next) => {
-    response.header("Access-Control-Allow-Origin", "*");
-    next();
-});
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
@@ -23,6 +16,11 @@ app.use(bodyParser.urlencoded({
 app.use(express.static('public'));
 
 app.use('/uploads', express.static('uploads'));
+
+app.use((request, response, next) => {
+    response.header("Access-Control-Allow-Origin", "*");
+    next();
+});
 
 const productsRouter = require('./api/routes/products')
 const orderRouter = require('./api/routes/orders');
