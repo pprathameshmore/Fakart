@@ -396,7 +396,7 @@ POST
 ```
 
 #### Body - (raw)
-```
+```javascript
 {
 	"productID" : string,
 	"qauntity" : string
@@ -435,7 +435,7 @@ POST
 ```
 
 #### Body (raw)
-```
+```javascript
 {
 	"productID" : string,
 	"qauntity" : string
