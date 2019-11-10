@@ -1,4 +1,4 @@
-![Icon](../assets/icons/fakart.jpg)
+![Icon](/assets/icons/fakart.jpg)
 # Fakart
 ## Online Shopping Site Fake API
 Online Shopping Site Fake RESTful API with MVC architecture
