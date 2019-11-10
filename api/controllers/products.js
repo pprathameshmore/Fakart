@@ -2,8 +2,6 @@ const Product = require('../models/product');
 const checkAuth = require('../middlewares/check-auth');
 const multer = require('multer');
 
-
-
 exports.product_get_all = (request, response, next) => {
 
     Product.find({}).select('name price _id productImage').exec().then(products => {
