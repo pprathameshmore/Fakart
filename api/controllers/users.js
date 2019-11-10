@@ -4,67 +4,57 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
 exports.user_sign_up = (request, response, next) => {
-
     User.find({
         email: request.body.email
-    }, (error, user) => {
-        if (error) {
-            response.status(404).json({
-                error
-            })
+    }).exec().then(user => {
+        if (user.length >= 1) {
+            return response.status(409).json({
+                message: "User exists"
+            });
         } else {
-            if (user.length >= 1) {
-                response.status(409).json({
-                    message: "User exists"
-                });
-            } else {
-                bcrypt.hash(request.body.password, 10, (error, hash) => {
-                    if (error) {
-                        response.status(500).json({
-                            error
-                        });
-                    } else {
-                        const user = new User({
-                            email: request.body.email,
-                            password: hash
-                        });
-                        user.save((error, user) => {
-                            if (error) {
-                                response.status(404).json({
-                                    error
-                                });
-                            } else {
-                                response.status(201).json({
-                                    message: "User created",
-                                    user
-                                });
-                            }
-                        });
-                    }
-                });
-            }
+            bcrypt.hash(request.body.password, 10, (error, hash) => {
+                if (error) {
+                    return response.status(500).json({
+                        error
+                    });
+                } else {
+                    const user = new User({
+                        email: request.body.email,
+                        password: hash
+                    });
+                    user.save((error, user) => {
+                        if (error) {
+                            response.status(404).json({
+                                error
+                            });
+                        } else {
+                            response.status(201).json({
+                                message: "User created",
+                            });
+                        }
+                    });
+                }
+            });
         }
+    }).catch(error => {
+        return response.status(404).json({
+            error
+        });
     });
 }
 
 exports.users_log_in = (request, response, next) => {
+
+
     User.findOne({
         email: request.body.email
-    }, (error, user) => {
-        if (error) {
-            response.status(404).json({
-                message: "Auth failed",
-                error
-            });
-            return;
-        }
-
+    }).exec().then(user => {
         bcrypt.compare(request.body.password, user.password, (error, isValid) => {
             if (error) {
-                response.status(401).json({
-                    message: "Auth failed"
+                return response.status(401).json({
+                    message: "Auth failed",
+                    error
                 });
-                return;
             } else if (isValid) {
                 const token = jwt.sign({
                     email: user.email,
@@ -72,39 +62,44 @@ exports.users_log_in = (request, response, next) => {
                 }, "secret", {
                     expiresIn: "1h"
                 });
-                response.setHeader('Content-Type', 'application/json');
-                response.status(200).json({
+                return response.status(200).json({
                     message: "Auth successful",
                     token
                 });
-                return;
             }
-            response.status(401).json({
+            return response.status(401).json({
                 message: "Auth falied"
             });
-            return;
         });
-    }).catch((error) => {
-        response.json({
+    }).catch(error => {
+        return response.status(404).json({
+            message: "Auth failed",
             error
         });
     });
 }
 
 exports.user_delete = (request, response, next) => {
+
     User.findByIdAndDelete({
         _id: request.params.userID
-    }, (error, user) => {
-        if (error) {
-            response.status(404).json({
-                message: "User not found",
-                error
+    }).exec().then(user => {
+
+        if (user === null) {
+            return response.status(404).json({
+                message: "User doesn't exists"
             });
         } else {
-            response.status(200).json({
+            return response.status(200).json({
                 message: "User removed",
                 user
             });
         }
-    })
+
+    }).catch(error => {
+        return response.status(404).json({
+            message: "Something went wrong",
+            error
+        });
+    });
 }
