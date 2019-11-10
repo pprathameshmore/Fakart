@@ -6,7 +6,7 @@ const UsersController = require('../controllers/users');
 
 router.post('/signup', UsersController.user_sign_up);
 
-router.post('/login', UsersController.users_log_in);
+router.post('/signin', UsersController.users_log_in);
 
 router.delete('/:userID', checkAuth, UsersController.user_delete);
 
