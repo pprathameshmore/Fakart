@@ -2,7 +2,7 @@
 
 ## Online Shopping Site Fake RESTful API
 Online Shopping Site Fake RESTful API with MVC architecture.
-Implemented the most popular HTTP routes.
+Implemented CRUD operation.
 
 [![Build Status](https://travis-ci.com/pprathameshmore/Fakart.svg?branch=master)](https://travis-ci.com/pprathameshmore/Fakart)
 ![GitHub top language](https://img.shields.io/github/languages/top/pprathameshmore/fakart?style=flat)
