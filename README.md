@@ -9,6 +9,8 @@ Implemented CRUD operations.
 ![GitHub](https://img.shields.io/github/license/pprathameshmore/fakart?style=flat)
 ![GitHub last commit](https://img.shields.io/github/last-commit/pprathameshmore/fakart?style=flat)
 
+Base URL : https://fakart-api.herokuapp.com/
+
 ## Table of Contents
 
 ### User routes
@@ -41,7 +43,7 @@ Sign up for service
 
 #### Request
 
-``` http://localhost:5000/user/signup/ ```
+``` https://fakart-api.herokuapp.com/user/signup/ ```
 
 ``` 
 Headers
@@ -70,7 +72,7 @@ Sign in for service
 
 #### Request
 
-``` http://localhost:5000/user/signin/ ```
+``` https://fakart-api.herokuapp.com/user/signin/ ```
 
 ``` 
 Headers
@@ -102,7 +104,7 @@ Return all products from the database
 
 #### Request
 
-``` http://localhost:5000/products/ ```
+``` https://fakart-api.herokuapp.com/products/ ```
 
 ``` 
 Headers
@@ -127,7 +129,7 @@ Return single product from the database
 
 #### Request
 
-``` http://localhost:5000/products/:id ```
+``` https://fakart-api.herokuapp.com/products/:id ```
 
 ``` 
 Headers
@@ -161,7 +163,7 @@ Return ascending or descending sorted products from the database
 
 #### Request
 
-``` http://localhost:5000/products/asc/name? ```
+``` https://fakart-api.herokuapp.com/products/asc/name? ```
 
 ```
 Note : 'name' parameter optional, you can use it for sort by name. Default all products sorted by price
@@ -187,7 +189,7 @@ GET
 
 #### Request
 
-``` http://localhost:5000/products/asc/name? ```
+``` https://fakart-api.herokuapp.com/products/asc/name? ```
 
 ```
 Note : 'name' parameter optional, you can use it for sort by name. Default all products sorted by price
@@ -218,7 +220,7 @@ Add new product into database
 
 #### Request
 
-``` http://localhost:5000/products/ ```
+``` https://fakart-api.herokuapp.com/products/ ```
 
 ``` 
 Headers
@@ -258,7 +260,7 @@ Update existing product into database
 
 #### Request
 
-``` http://localhost:5000/products/:id ```
+``` https://fakart-api.herokuapp.com/products/:id ```
 
 ``` 
 Headers
@@ -297,7 +299,7 @@ Delete product from database
 
 #### Request
 
-``` http://localhost:5000/products/:id ```
+``` https://fakart-api.herokuapp.com/products/:id ```
 
 ``` 
 Headers
@@ -329,7 +331,7 @@ Return all orders from the database
 
 #### Request
 
-``` http://localhost:5000/orders/ ```
+``` https://fakart-api.herokuapp.com/orders/ ```
 
 ``` 
 Headers
@@ -354,7 +356,7 @@ Return single order from the database
 
 #### Request
 
-``` http://localhost:5000/orders/:id ```
+``` https://fakart-api.herokuapp.com/orders/:id ```
 
 ``` 
 Headers
@@ -384,7 +386,7 @@ Add new order into database
 
 #### Request
 
-``` http://localhost:5000/orders/ ```
+``` https://fakart-api.herokuapp.com/orders/ ```
 
 ``` 
 Headers
@@ -423,7 +425,7 @@ Update existing order into database
 
 #### Request
 
-``` http://localhost:5000/orders/:id ```
+``` https://fakart-api.herokuapp.com/orders/:id ```
 
 ``` 
 Headers
@@ -462,7 +464,7 @@ Delete order from database
 
 #### Request
 
-``` http://localhost:5000/orders/:id ```
+``` https://fakart-api.herokuapp.com/orders/:id ```
 
 ``` 
 Headers
