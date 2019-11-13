@@ -3,7 +3,9 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const app = express();
 
-mongoose.connect(process.env.MONGO_DB_URL, {
+const MONGO_DB_URL = "mongodb+srv://prathamesh:9420776721@cluster0-idvei.mongodb.net/test?retryWrites=true&w=majority"
+
+mongoose.connect(MONGO_DB_URL, {
     useUnifiedTopology: true,
     useNewUrlParser: true,
     useMongoClient: true

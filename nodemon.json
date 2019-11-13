@@ -1,5 +1,0 @@
-{
-    "env": {
-        "MONGO_DB_URL": "mongodb+srv://prathamesh:9420776721@cluster0-idvei.mongodb.net/test?retryWrites=true&w=majority"
-    }
-}
