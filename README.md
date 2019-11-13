@@ -2,7 +2,7 @@
 
 ## Online Shopping Site Fake RESTful API
 Online Shopping Site Fake RESTful API with MVC architecture.
-Implemented the most popular HTTP routes.
+Implemented CRUD operations.
 
 [![Build Status](https://travis-ci.com/pprathameshmore/Fakart.svg?branch=master)](https://travis-ci.com/pprathameshmore/Fakart)
 ![GitHub top language](https://img.shields.io/github/languages/top/pprathameshmore/fakart?style=flat)
@@ -52,15 +52,15 @@ POST
 ```
 ```javascript
 {
-    "email" : "test@test.com",
-    "password" : "test"
+    "email" : string,
+    "password" : string
 }
 ```
 #### Response
 
 ```javascript
 {
-    "message": "User created"
+    "message": string
 }
 ```
 
@@ -82,8 +82,8 @@ POST
 
 ```javascript
 {
-    "email" : "test@test.com",
-    "password" : "test"
+    "email" : string,
+    "password" : string
 }
 ```
 #### Response
@@ -116,7 +116,7 @@ GET
 ```javascript
 {
     "count": int,
-    "message": "All products",
+    "message": string,
     "products": array
 }
 ```
@@ -229,7 +229,7 @@ HTTP method
 POST
 ```
 
-#### Body - (form-data)
+#### Body (form-data)
 ```
 "name" : string
 "price" : string
@@ -240,11 +240,11 @@ POST
 
 ```javascript
 {
-    "message" : string",
+    "message" : string,
     "product" : {
         "_id" : string,
         "name" : string,
-        "price" : string,
+        "price" : int,
         "productImage" : string,
         "__v" : int
     }
@@ -280,7 +280,7 @@ PATCH
 
 ```javascript
 {
-    "message" : string",
+    "message" : string,
     "product" : {
         "_id" : string,
         "name" : string,
@@ -312,7 +312,7 @@ DELETE
 
 ```javascript
 {
-    "message" : string",
+    "message" : string,
     "product" : {
         "_id" : string,
         "name" : string,
@@ -395,7 +395,7 @@ HTTP method
 POST
 ```
 
-#### Body - (raw)
+#### Body (raw)
 ```javascript
 {
 	"productID" : string,
