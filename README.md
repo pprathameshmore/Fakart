@@ -72,7 +72,7 @@ Sign in for service
 
 #### Request
 
-``` https://fakart-api.herokuapp.com/user/signin/ ```
+```https://fakart-api.herokuapp.com/user/signin/ ```
 
 ``` 
 Headers
@@ -96,6 +96,8 @@ POST
     "token": string
 }
 ```
+
+```Note : Token will expire in 1 hour```
 
 
 ### Get all products
