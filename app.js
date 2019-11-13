@@ -1,14 +1,14 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const path = require('path');
 const app = express();
 
 const MONGO_DB_URL = "mongodb+srv://prathamesh:9420776721@cluster0-idvei.mongodb.net/test?retryWrites=true&w=majority"
 
 mongoose.connect(MONGO_DB_URL, {
     useUnifiedTopology: true,
-    useNewUrlParser: true,
-    useMongoClient: true
+    useNewUrlParser: true
 }, () => {
     console.log("Connected to Database");
 });
@@ -17,8 +17,7 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(express.static('public'));
-
-app.use('/uploads', express.static('uploads'));
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
 app.use((request, response, next) => {
     response.header("Access-Control-Allow-Origin", "*");

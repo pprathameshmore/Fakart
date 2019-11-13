@@ -1,6 +1,4 @@
 const Product = require('../models/product');
-const checkAuth = require('../middlewares/check-auth');
-const multer = require('multer');
 
 exports.product_get_all = (request, response, next) => {
 
@@ -9,12 +7,19 @@ exports.product_get_all = (request, response, next) => {
             return response.status(204).json({
                 message: "No content",
                 products
-            })
+            });
         } else {
             return response.status(200).json({
                 count: products.length,
                 message: "All products",
-                products
+                products : products.map(products => {
+                    return {
+                        _id : products.id,
+                        name : products.name,
+                        price : products.price,
+                        productImage : "https://fakart-api.herokuapp.com/" + products.productImage.replace(/\\/, "/")
+                    }
+                })
             });
         }
     }).catch(error => {
@@ -81,7 +86,7 @@ exports.product_desc = (request, response, next) => {
             return response.status(404).json({
                 message: "Something went wrong",
                 error
-            })
+            });
         });
     } else if (request.params.name === 'name') {
         Product.find({}).sort({
