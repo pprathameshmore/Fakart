@@ -20,7 +20,7 @@ Base URL : https://fakart-api.herokuapp.com/
 ### Product routes
 * [Get all products](#get-all-products).
 * [Get a single product](#get-a-single-product).
-* [Get uploded photos](#get-all-quotes-by-keyword).
+* [Get uploded photo](#get-uploaded-photo).
 * [Products sorting](#product-sorting).
 #### Protected routes
 * [Add new product](#add-new-product).
@@ -151,8 +151,24 @@ GET
     }
 }
 ```
+### Get uploaded photo
 
+Return single photo from the database
 
+#### Request
+
+``` https://fakart-api.herokuapp.com/uploads/:fileName ```
+
+``` 
+Headers
+Content-Type : application/json
+
+HTTP method
+GET
+```
+#### Response
+
+Image output
 
 
 ### Product sorting
