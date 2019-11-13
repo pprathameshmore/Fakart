@@ -5,8 +5,9 @@ const app = express();
 
 mongoose.connect(process.env.MONGO_DB_URL, {
     useUnifiedTopology: true,
-    useNewUrlParser: true
-}, (error) => {
+    useNewUrlParser: true,
+    useMongoClient: true
+}, () => {
     console.log("Connected to Database");
 });
 app.use(bodyParser.json());
